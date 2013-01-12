@@ -81,10 +81,6 @@ class ChildListField(ChildField):
             child = self.model_class(element)
             child.parse_node()
             children.append(child)
-            if self.tagname == 'packet' and child.payload:
-                import pudb; pudb.set_trace()
-        if self.tagname == 'packet':
-            import pudb; pudb.set_trace()
         return children
 
     def validate(self, cleaned):
