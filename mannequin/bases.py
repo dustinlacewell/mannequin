@@ -9,7 +9,6 @@ class Field(object):
     defaults = tuple()
 
     def __init__(self, **kwargs):
-        self.__values = dict()
         for (defname, defvalue) in self.defaults:
             if defname in kwargs:
                 setattr(self, defname, kwargs.pop(defname))
@@ -27,12 +26,12 @@ class Field(object):
         pass
 
     def __get__(self, obj, objtype):
-        return getattr(obj, "__value")
+        return getattr(obj, "__field_{0}".format(id(self)))
 
     def __set__(self, obj, value):
         cleaned_value = self.clean(value)
         self.validate(cleaned_value)
-        setattr(obj, '__value', cleaned_value)
+        setattr(obj, '__field_{0}'.format(id(self)), cleaned_value)
 
 class Model(object):
     version = "unknown"
