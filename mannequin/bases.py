@@ -47,8 +47,10 @@ class Model(object):
         for name, value in vars(type(self)).items():
             if cls:
                 if isinstance(value, cls):
+                    value.parent = self
                     yield (name, value)
             elif sub:
                 if issubclass(type(value), sub):
+                    value.parent = self
                     yield (name, value)
 
