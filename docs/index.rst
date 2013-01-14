@@ -129,7 +129,9 @@ example, if we had an application protocol that featured an authentication
 mechanism the Field classes can work harder for us than in the TCPPacket
 example:
 
+
 ::
+
     class UsernameField(fields.String):
 
         def __init__(self):
@@ -152,6 +154,8 @@ example:
                 msg = "%s is not a currently activated user." % cleaned.username
                 raise ValidationError(msg) # indicate failure to validate
 
+::
+
     class PasswordField(fields.String):
 
         def __init__(self):
@@ -167,6 +171,9 @@ example:
                 user.authenticate()
             except AuthenticationError, e:
                 raise ValidationError(e.message)
+
+
+::
 
     class LoginPacket(MyAppPacket):
         # MyAppPacket provides MyApp's protocol header fields
