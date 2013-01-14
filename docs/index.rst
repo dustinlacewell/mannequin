@@ -133,8 +133,8 @@ example:
 
 
 ::
-    class UsernameField(fields.String):
 
+    class UsernameField(fields.String):
         def __init__(self):
             # UsernameField provides an implicit length to String
             super(UsernameField, self).__init__(32) 
@@ -155,9 +155,7 @@ example:
                 msg = "%s is not a currently activated user." % cleaned.username
                 raise ValidationError(msg) # indicate failure to validate
 
-::
     class PasswordField(fields.String):
-
         def __init__(self):
             # PasswordField provides an implicit length to String
             super(UsernameField, self).__init__(32) 
@@ -172,8 +170,6 @@ example:
             except AuthenticationError, e:
                 raise ValidationError(e.message)
 
-
-::
     class LoginPacket(MyAppPacket):
         # MyAppPacket provides MyApp's protocol header fields
         user = UsernameField() # verifies user exists in database
