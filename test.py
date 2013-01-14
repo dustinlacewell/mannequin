@@ -4,13 +4,20 @@ from mannequin.bases import Model, Field
 
 class ValidationError(Exception): pass
 
-class String(str):
-    def __init__(self, value):
-        super(String, self).__init__(self)
-        self.__value = value
+class AttributeString(object):
+    def __init__(self, value, attributes):
+        super(AttributeString, self).__init__()
+        self.value = value
+        self.attrib = attributes
+
+    def __getitem__(self, key):
+        return self.attrib.get(key)
 
     def __str__(self):
-        return str(self.__value)
+        return str(self.value)
+
+    def __repr__(self):
+        return str(self.value)
 
 # XML parsing types
 
@@ -32,6 +39,9 @@ class XMLNode(Model):
         with open(filename, 'r') as fobj:
             self.xmlnode = etree.parse(fobj).getroot()
         self.parse_node()
+
+    def __getitem__(self, key):
+        return self.xmlnode.attrib.get(key)
 
     def __str__(self):
         return "<XMLNode>"
@@ -97,7 +107,8 @@ class ChildListField(ChildField):
 class PDMLNode(XMLNode):
     def parse_fields(self, element):
         name = element.attrib.get('name').split('.')[-1]
-        value = String(element.attrib.get('value', element.attrib.get('show')))
+        value = element.attrib.get('value', element.attrib.get('show'))
+        value = AttributeString(value, element.attrib)
         for field in element.xpath('./field'):
             child_name, child_value = self.parse_fields(field)
             if child_name and child_value:
@@ -117,19 +128,18 @@ class PDMLNode(XMLNode):
                 if name and value:
                     setattr(self, name, value)
 
-class Payload(PDMLNode): pass
-
-class TCP(PDMLNode):
-    showname = AttributeField('showname')
-
 class Packet(PDMLNode):
     protocols = ChildListField('proto')
-    tcp = ChildField("proto[@name='tcp']", model_class=TCP)
-    payload = ChildField("proto[@name='fake-field-wrapper']", model_class=Payload)
+    ip4 = ChildField("proto[@name='ip']", model_class=PDMLNode)
+    tcp = ChildField("proto[@name='tcp']", model_class=PDMLNode)
+    payload = ChildField("proto[@name='fake-field-wrapper']", model_class=PDMLNode)
 
 class PDML(PDMLNode):
     packets = ChildListField('packet', model_class=Packet)
 
 pdml = PDML()
 pdml.parse_file('packets')
+print pdml.packets[0].tcp['showname'] # tag attributes
 import pdb; pdb.set_trace()
+print pdml.packets[0].tcp.flags.res # auto pdml nested <field> parsing
+print pdml.packets[3].payload.data.data # wireshark unknown protocol payload
