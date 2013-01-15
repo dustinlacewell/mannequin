@@ -241,3 +241,4 @@ texinfo_documents = [
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
 html_logo = "mannequin-sidebar.png"
+html_style = "style.css"
