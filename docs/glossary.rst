@@ -19,27 +19,17 @@ Glossary
 
         see also, :term:`namespace package`
 
-    distribution
-        Separately installable sets of Python modules as stored in the
-        Python package index, and installed by distutils or setuptools.
-
-        *definition taken from* `PEP 382`_ *text*
-
-    vendor package
-        Groups of files installed by an operating system's packaging
-        mechanism (e.g. Debian or Redhat packages install on Linux systems).
-        
-        *definition taken from* `PEP 382`_ *text*
-
-    namespace package
-        Mechanism for splitting a single Python package across multiple
-        directories on disk. One or more distributions (see :term:`distribution`)
-        may provide modules which exist inside the same :term:`namespace package`.
-
-        *definition taken from* `PEP 382`_ *text*
-
-    module
-        An importable python namespace defined in a single file.
-
+    declarative
+    declarative models
+    declarative technique
+    declarative programming
+        In computer science, declarative programming is a programming paradigm
+        that expresses the logic of a computation without describing its
+        control flow. Many languages applying this style attempt to
+        minimize or eliminate side effects by describing what the program
+        should accomplish, rather than describing how to go about
+        accomplishing it (the how is left up to the language's
+        implementation). This is in contrast with imperative programming, in
+        which algorithms are implemented in terms of explicit steps.
 
 .. _PEP 382: http://www.python.org/dev/peps/pep-0382/
