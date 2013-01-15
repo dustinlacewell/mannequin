@@ -4,7 +4,7 @@ Writing Models
 Code Listing
 ------------
 
-The main class in **mannequin** is the ``Model``. It represents your object and contains all of the data fields provided in its declaration. Other than that, the ``Model`` base-class provides only a few other methods for the book-keeping of said ``Field``s.
+The main class in **mannequin** is the ``Model``. It represents your object and contains all of the data fields provided in its declaration. Other than that, the ``Model`` base-class provides only a few other methods for the book-keeping of said ``Fields``.
 
 Here is the ``Model`` implementation:
 
