@@ -6,10 +6,6 @@
 Welcome to mannequin's documentation!
 ===========================================
 
-.. image:: _static/mannequin.png
-    :align: right
-    :width: 25%
-
 Contents:
 
 .. toctree::
@@ -21,6 +17,10 @@ Contents:
 
 
 Full Documentation: http://readthedocs.org/docs/mannequin/
+
+.. image:: _static/mannequin.png
+    :align: right
+    :width: 25%
 
 Overview
 ========
