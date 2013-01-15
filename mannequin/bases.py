@@ -33,24 +33,31 @@ class Field(object):
         self.validate(cleaned_value)
         setattr(obj, '__field_{0}'.format(id(self)), cleaned_value)
 
+
 class Model(object):
     version = "unknown"
 
-    def __init__(self):
-        self.fields = []
-        self.fields.extend(self._getFields(sub=Field))
-
-    def _getFields(self, cls=None, sub=None):
-        """Utility to locate class-defined options."""
+    def gather_fields(self, cls=None, sub=None):
+        """Utility to locate class-attributed Fields"""
         assert cls or sub
 
-        for name, value in vars(type(self)).items():
-            if cls:
-                if isinstance(value, cls):
-                    value.parent = self
-                    yield (name, value)
-            elif sub:
-                if issubclass(type(value), sub):
-                    value.parent = self
-                    yield (name, value)
+        self.fields = dict()
 
+        def _gather_fields():
+            for name, value in vars(type(self)).items():
+                if cls:
+                    if isinstance(value, cls):
+                        self.bind_field(name, value)
+                elif sub:
+                    if issubclass(type(value), sub):
+                        self.bind_field(name, value)
+
+        _gather_fields()
+        self.fields_gathered(self.fields)
+
+    def bind_field(self, name, field):
+        field.parent = self
+        self.fields[name] = field
+
+    def fields_gathered(self, fields):
+        pass

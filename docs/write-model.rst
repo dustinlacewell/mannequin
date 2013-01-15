@@ -1,71 +1,48 @@
-Writing Plugins
+Writing Models
 ===============
 
-Plugins can exist inside your
-existing packages or in special namespace packages, which exist
-only to house plugins.
+The main class in mannequin is the Model. It represents your object and contains all of the data fields provided in its declaration. Other than that, the Model base-class provides only a few other methods for the book-keeping of said Fields.
 
-The only requirement is that any package containing plugins be
-designated a "namespace package", which is currently performed
-in Python via the ``pkgutil.extend_path`` utility, seen below.
-This allows the namespace to be provided in multiple places on
-the python ``sys.path``, where ``import`` looks, and all the
-contents will be combined.
-
-Use a :term:`namespace package`
-
-This allows multiple packages installed on your system to share
-this name, so they may come from different installed projects
-and all combine to provide a larger set of plugins.
-
-
-Example
--------
+Here is the Model implementation:
 
 ::
 
-    # logfilter/__init__.py
+class Model(object):
+    version = "unknown"
 
-    from pkgutil import extend_path
-    __path__ = extend_path(__path__, __name__)
+    def gather_fields(self, cls=None, sub=None):
+        """Utility to locate class-attributed Fields"""
+        assert cls or sub
 
+        self.fields = dict()
 
-::
+        def _gather_fields():
+            for name, value in vars(type(self)).items():
+                if cls:
+                    if isinstance(value, cls):
+                        self.bind_field(name, value)
+                elif sub:
+                    if issubclass(type(value), sub):
+                        self.bind_field(name, value)
 
-    # logfilter/hide_extra.py
-    
-    from logfilter import Skip
+        _gather_fields()
+        self.fields_gathered(self.fields)
 
-    def filter(log_entry):
-        level = log_entry.split(':', 1)[0]
-        if level != 'EXTRA':
-            return log_entry
-        else:
-            raise Skip()
+    def bind_field(self, name, field):
+        field.parent = self
+        self.fields[name] = field
 
-
-Using the plugin
-''''''''''''''''
-
-In our log tool, we might load all the modules in the ``logfilter``
-namespace, and then use them all to process each entry in our logs.
-We don't need to know all the filters ahead of time, and other packages
-can be installed on a user's system providing additional modules
-in the namespace, which we never even knew about.
-
-::
-
-    from straight.plugin import load
-
-    class Skip(Exception):
+    def fields_gathered(self, fields):
         pass
 
-    plugins = load('logfilter')
 
-    def filter_entry(log_entry):
-        for plugin in plugins:
-            try:
-                log_entry = plugin.filter(log_entry)
-            except Skip:
-                pass
-        return log_entry
+Initialization
+--------------
+
+When you instantiate your Model subclasses, they will already feature the various Field descriptors you defined on those subclasses. In fact, nothing about the declarative technique supported by mannequin depends on any of the code in this class.
+
+The `gather_fields` method here is provided purely as a convenience. It introspects the class and determines each of the instance attributes are subclasses of the mannequin Field type. It stores each of Fields into a `.fields` dictionary on the Model so that you can use for whatever you'd like.
+
+While gathering the fields, the `bind_field` method will be called for each. This is one place you can hook in the case you happen to need to "post-process" each field. The other place is the `fields_gathered` method which will be called with the final dictionary of Fields.
+
+As you can see the Model class is very minimal. However this makes more room for your application specific methods. These Models are your data objects after all and your subclasses will likely feature a number of methods relevant to that type, in addition to any Fields you put there.

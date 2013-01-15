@@ -179,10 +179,9 @@ example:
 Getting Started
 ===============
 
-The easiest way to get started is to start looking at the examples included
-with the source or by reading about how to write your own Fields and Models.
+The easiest way to get started is to checkout the examples in the source repository. It may be beneficial to read about Models and Fields. You may also enjoy the tutorial which describes how to use mannequin to create a declarative XML parser.
 
-Read the :doc:`write-field` documentation to get started.
+Read the :doc:`write-model` documentation to get started.
 
 Indices and tables
 ==================
