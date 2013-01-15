@@ -18,12 +18,10 @@ Contents:
 
 Full Documentation: http://readthedocs.org/docs/mannequin/
 
-Mailing List: https://groups.google.com/forum/#!forum/mannequin
-
 Overview
 ========
 
-`mannequin` is very simple.
+**mannequin** is very simple.
 
 It is a small library that helps you create `declarative models` for your own
 libraries and applications using Python class definitions. Declarative models
@@ -31,7 +29,7 @@ are a nice way to define the `structure of your data or objects`. Using Python
 classes for this keeps it natural and familiar.
 
 If you've ever encountered the Python web-framework Django you might be
-familiar with Django's Models or Forms. Django uses this declarative technique
+familiar with it's ``Models`` or ``Forms``. Django uses this declarative technique
 to allow you to naturally define tables in your database:
 
 ::
@@ -60,7 +58,7 @@ There are other database libraries that use this technique to represent
 database schemas like SQLAlchemy and Axiom.
 
 Let's look at a theoretical example of unpacking binary data from structures.
-With the standard ''struct'' module this can be a painful exercise. Given some
+With the standard ``struct`` module this can be a painful exercise. Given some
 imagined packet structure, unpacking a binary stream into the various fields
 is cumbersome:
 
@@ -78,7 +76,7 @@ is cumbersome:
     footer = struct.unpack('B',data[42]) 
 
 
-Yikes! Even if we ask ''struct'' to unpack all of the fields at once, we are
+Yikes! Even if we ask ``struct`` to unpack all of the fields at once, we are
 then relegated to numerical indexing. We can use namedtuples but we still have
 the feeling that there has to be a better way:
 
@@ -125,10 +123,10 @@ Another advantage is that it keeps the `handling` of each specific packet `close
 to the structure definition`. Each class declarative can contain methods
 specific to usage inside your application.
 
-Since we are using Field objects to define the types of our various packet
+Since we are using ``Field`` objects to define the types of our various packet
 fields we also gain the ability to do `implicit validation on data`. For
 example, if we had an application protocol that featured an authentication
-mechanism the Field classes can work harder for us than in the TCPPacket
+mechanism the Field classes can work harder for us than in the ``TCPPacket``
 example:
 
 
@@ -179,7 +177,7 @@ example:
 Getting Started
 ===============
 
-The easiest way to get started is to checkout the examples in the source repository. It may be beneficial to read about Models and Fields. You may also enjoy the tutorial which describes how to use mannequin to create a declarative XML parser.
+The easiest way to get started is to checkout the examples in the source repository. It may be beneficial to read about ``Models`` and ``Fields``. You may also enjoy the tutorial which describes how to use **mannequin** to create a declarative XML parser.
 
 Read the :doc:`write-model` documentation to get started.
 
