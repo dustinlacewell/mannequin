@@ -27,13 +27,13 @@ Overview
 
 **mannequin** is very simple.
 
-It is a small library that helps you create `declarative models` for your own
-libraries and applications using Python class definitions. Declarative models
+It is a small library that helps you create :term:`declarative` models for your own
+libraries and applications using Python class definitions. :term:`Declarative` models
 are a nice way to define the `structure of your data or objects`. Using Python
 classes for this keeps it natural and familiar.
 
-If you've ever encountered the Python web-framework Django you might be
-familiar with it's ``Models`` or ``Forms``. Django uses this declarative technique
+If you've ever encountered the Python web-framework :term:`Django` you might be
+familiar with it's ``Models`` or ``Forms``. Django uses this :term:`declarative` technique
 to allow you to naturally define tables in your database:
 
 ::
@@ -62,8 +62,8 @@ There are other database libraries that use this technique to represent
 database schemas like SQLAlchemy and Axiom.
 
 Let's look at a theoretical example of unpacking binary data from structures.
-With the standard ``struct`` module this can be a painful exercise. Given some
-imagined packet structure, unpacking a binary stream into the various fields
+With the standard :term:`struct` module this can be a painful exercise. Given some
+imagined :term:`packet` structure, unpacking a :term:`binary stream` into the various fields
 is cumbersome:
 
 ::
@@ -81,7 +81,7 @@ is cumbersome:
 
 
 Yikes! Even if we ask ``struct`` to unpack all of the fields at once, we are
-then relegated to numerical indexing. We can use namedtuples but we still have
+then relegated to numerical indexing. We can use :term:`namedtuple` but we still have
 the feeling that there has to be a better way:
 
 ::
@@ -119,7 +119,7 @@ definition of the same packet structure as above:
 The obvious advantage here is `readability`. But there are some other not so
 obvious advantages. The fact that this packet declaration is a class means
 that it can be `subclassed into more specific implementations`, perhaps adding
-`additional fields`. If we were implementing an application specific protocol we
+`additional fields`. If we were implementing an :term:`application protocol` we
 could implement the header of our protocol in a base class and use that in the
 actual implementation of our various packet types.
 
